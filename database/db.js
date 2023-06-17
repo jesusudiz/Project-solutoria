@@ -11,7 +11,7 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 
 const Indicadores = indicadoresModel(sequelize);
 
-sequelize.sync({ alter: true }) // Configura la opción force a true para reiniciar la base de datos en cada reinicio del servidor
+sequelize.sync({ force: true }) // Configura la opción force a true para reiniciar la base de datos en cada reinicio del servidor
   .then(async () => {
     console.log('El modelo "Indicadores" se sincronizó correctamente con la base de datos.');
     await saveDb();

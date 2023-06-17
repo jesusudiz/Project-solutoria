@@ -22,24 +22,30 @@ export const dataId = async (id) => {
     return data;
 }
 
-export const dataByName = async (name) => {
+export const dataByName = async (name, limit, offset) => {
     const data = await Indicadores.findAll({
-        where: {
-            nombreIndicador: {
-                [Op.iLike]: `%${name}%`,
-            }
-        }
-    })
-    const totalPages = await Indicadores.count({
-        where: {
-            nombreIndicador: {
-                [Op.iLike]: `%${name}%`,
-            }
-        }
-    })
-
+      where: {
+        nombreIndicador: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+      limit,
+      offset,
+    });
+  
+    const totalItems = await Indicadores.count({
+      where: {
+        nombreIndicador: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
+  
+    const totalPages = Math.ceil(totalItems / limit);
+  
     return { data, totalPages };
-}
+  };
+  
 
 export const dataByDate = async (date) => {
     const data = await Indicadores.findAll({
@@ -51,49 +57,60 @@ export const dataByDate = async (date) => {
 
     return { data, totalPages };
 }
-export const dataByMonth = async (month) => {
-    const data = await Indicadores.findAll({
-        where: sequelize.where(sequelize.fn('MONTH', sequelize.col('fechaIndicador')), month)
-    });
-    const totalPages = await Indicadores.count({
-        where: sequelize.where(sequelize.fn('MONTH', sequelize.col('fechaIndicador')), month)
-    });
 
-    return { data, totalPages };
+
+export const dataByYear = async (year,limit, offset) => {
+  const startDate = `${year}-01-01`;
+  const endDate = `${year}-12-31`;
+
+  const data = await Indicadores.findAll({
+    where: {
+      fechaIndicador: {
+        [Op.between]: [startDate, endDate]
+      },
+     
+    },
+    limit,
+    offset
+  });
+
+  const totalItems = await Indicadores.count({
+    where: {
+      fechaIndicador: {
+        [Op.between]: [startDate, endDate]
+      }
+    }
+  });
+  const totalPages = Math.ceil(totalItems / limit);
+  return { data, totalPages };
 };
 
-export const dataByYear = async (year) => {
+
+
+
+export const searchDataByDateRange = async (dateStart, dateEnd, limit, offset) => {
     const data = await Indicadores.findAll({
-        where: sequelize.where(sequelize.fn('YEAR', sequelize.col('fechaIndicador')), year)
-    });
-    const totalPages = await Indicadores.count({
-        where: sequelize.where(sequelize.fn('YEAR', sequelize.col('fechaIndicador')), year)
-    });
-
-    return { data, totalPages };
-};
-
-export const searchDataByYearAndMonth = async (year, month) => {
-    const startDate = `${year}-${month}-01`;
-    const endDate = `${year}-${month}-31`;
-
-    const data = await Indicadores.findAll({
-        where: {
-            fechaIndicador: {
-                [Op.between]: [startDate, endDate],
-            },
+      where: {
+        fechaIndicador: {
+          [Op.between]: [dateStart, dateEnd],
         },
+      },
+      limit,
+      offset,
     });
-    const totalPages = await Indicadores.count({
-        where: {
-            fechaIndicador: {
-                [Op.between]: [startDate, endDate],
-            }
-        }
+  
+    const totalItems = await Indicadores.count({
+      where: {
+        fechaIndicador: {
+          [Op.between]: [dateStart, dateEnd],
+        },
+      },
     });
-
+  
+    const totalPages = Math.ceil(totalItems / limit);
+  
     return { data, totalPages };
-};
+  };
 
 export const createData = async (newData) => {
     const data = await Indicadores.create(newData);

@@ -6,7 +6,7 @@ export default async function allIndicator(req, res) {
         const limit = 20;
 
         const data = await allData(page, limit);
-        return res.status(200).json(data);
+        return res.status(200).json({page,...data});
     } catch (error) {
         return res.status(500).json({ error: "Error retrieving indicators" });
     }
