@@ -1,0 +1,15 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+/* 
+body {
+  @apply w-full mx-auto p-4;
+}
+
+@media (min-width: 1024px) {
+  body {
+    @apply px-8;
+  }
+} */
