@@ -16,9 +16,10 @@ export function Card({ data }) {
             {
               label: data.unidadMedidaIndicador,
               data: [data.valorIndicador],
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
+              backgroundColor: '#4f46e5',
+              borderColor: '#4f46e5',
               borderWidth: 1,
+              color:"black"
             },
           ],
         },
@@ -36,9 +37,9 @@ export function Card({ data }) {
 
   return (
     <div className="flex flex-col justify-around items-center w-200 h-300 border rounded-xl shadow-lg overflow-hidden gap-2 p-2">
-    <div className="wx-3/6 m-2 mx-2 overflow-hidden">
-      <canvas ref={chartRef} />
-    </div>
+    <div className="w-5/6 m-1 mx-1 my-1 overflow-hidden">
+        <canvas ref={chartRef} />
+      </div>
     <div className="flex justify-center">
       <span className="text-xs m-2">{data.fechaIndicador}</span>
       <span className="text-xs">{data.origenIndicador}</span>

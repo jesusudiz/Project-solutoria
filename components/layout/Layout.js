@@ -2,14 +2,14 @@ import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import {sortOptions,subCategories,filters } from "./utils.js"
+import {sortOptions,subCategories,filters } from "../viewcards/utils.js"
 
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function LayoutIndicators({children}) {
+export function Layout({children}) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   return (
